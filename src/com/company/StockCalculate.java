@@ -12,27 +12,28 @@ import java.time.LocalDate;
 import java.util.Date;
 
 public class StockCalculate extends JFrame implements ActionListener {
-    private String stockName;
+    private String stockSymbol;
     private int amount;
     private double price;
     private Date datePurchased;
+    private JButton resetButton;
 
-    public StockCalculate(String stockName) {
+    public StockCalculate(String stockSymbol) {
 
-        this.stockName = stockName;
+        this.stockSymbol = stockSymbol;
 
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
-        JLabel stockLabel = new JLabel("Stock: ");
+        JLabel stockLabel = new JLabel("Stock: " /*+ stockName.toUpperCase()*/);
 
-        JTextField stockNameLabel = new JTextField(this.stockName);
+        JTextField stockNameLabel = new JTextField(this.stockSymbol);
         stockNameLabel.setEditable(false);
 
         JLabel amountLabel = new JLabel("Amount Purchased: ");
 
-        JLabel priceLabel = new JLabel("Price Purchased at: ");
+        JLabel priceLabel = new JLabel("Price Purchased at ($): ");
         priceLabel.putClientProperty("JComponent.sizeVariant", "large");
 
         JIntegerTextField priceText = new JIntegerTextField();
@@ -43,6 +44,9 @@ public class StockCalculate extends JFrame implements ActionListener {
 
         JButton calculateDifferenceButton = new JButton("Calculate Profit/Loss");
         calculateDifferenceButton.addActionListener(this);
+
+        resetButton = new JButton("Go Back");
+        resetButton.addActionListener(this);
 
         LocalDate today = LocalDate.now();
         DatePickerSettings datePickerSettings = new DatePickerSettings();
@@ -84,6 +88,11 @@ public class StockCalculate extends JFrame implements ActionListener {
         gbc.gridy = 8;
         panel.add(calculateDifferenceButton, gbc);
 
+        gbc.gridx = 3;
+        gbc.gridy = 10;
+        panel.add(resetButton, gbc);
+
+
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         add(panel);
@@ -97,6 +106,13 @@ public class StockCalculate extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ;
+        if(e.getSource() == resetButton) {
+            new StockSearch();
+            this.dispose();
+        } else {
+            // Calculate
+            new CalculationResult(stockSymbol);
+            this.dispose();
+        }
     }
 }

@@ -47,6 +47,7 @@ class Login extends JFrame implements ActionListener {
             this.setVisible(false);
             StockSearch stockSearch = new StockSearch();
             stockSearch.setVisible(true);
+            this.dispose();
 //            this.setVisible(false);
 //            StockCalculate stockCalculate = new StockCalculate("AAPL");
 //            stockCalculate.setVisible(true);

@@ -29,8 +29,12 @@ public class StockSearch extends JFrame implements ActionListener {
         searchLabel = new JLabel("Enter stock to search for: ");
         searchString = new JTextField();
         searchString.setPreferredSize(new Dimension(180, 30));
+
         searchButton = new JButton("Initiate Search");
         searchButton.addActionListener(this);
+
+        JButton resetButton = new JButton("Reset");
+        resetButton.addActionListener(this);
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
@@ -44,6 +48,11 @@ public class StockSearch extends JFrame implements ActionListener {
         gbc.gridx = 3;
         gbc.gridy = 8;
         panel.add(searchButton, gbc);
+
+        gbc.gridx = 3;
+        gbc.gridy = 9;
+        panel.add(resetButton, gbc);
+
         add(panel);
 
         setTitle("Search Stock Name");
@@ -66,27 +75,33 @@ public class StockSearch extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!searchString.getText().isEmpty()) {
-            stockName = searchString.getText().trim();
-            String urlStock = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=" + stockName + "&apikey=OFYBOAYYDFXDHFBJ";
-            try {
-                URL url = new URL(urlStock);
-                String sb = getUrl(url);
-                JSONObject obj = new JSONObject(sb);
-                JSONArray item = obj.getJSONArray("bestMatches");
-                if (item.length() == 0) {
-                    System.out.println("NO RESULTS FOUND");
-                } else {
-                    // Grab symbol and open new Window where user can input information.
-                    StockCalculate stockCalculate = new StockCalculate(item.getJSONObject(0).getString("1. symbol"));
-                    this.setVisible(false);
-                    stockCalculate.setVisible(true);
+        if (e.getSource() == searchButton) {
+            if (!searchString.getText().isEmpty()) {
+                stockName = searchString.getText().trim();
+                String urlStock = "https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=" + stockName + "&apikey=OFYBOAYYDFXDHFBJ";
+                try {
+                    URL url = new URL(urlStock);
+                    String sb = getUrl(url);
+                    JSONObject obj = new JSONObject(sb);
+                    JSONArray item = obj.getJSONArray("bestMatches");
+                    if (item.length() == 0) {
+                        System.out.println("NO RESULTS FOUND");
+                    } else {
+                        // Grab symbol and open new Window where user can input information.
+                        StockCalculate stockCalculate = new StockCalculate(item.getJSONObject(0).getString("1. symbol"));
+                        this.setVisible(false);
+                        stockCalculate.setVisible(true);
+                    }
+                } catch (IOException | JSONException ex) {
+                    ex.printStackTrace();
                 }
-            } catch (IOException | JSONException ex) {
-                ex.printStackTrace();
+            } else {
+                System.out.println("No String Entered");
             }
         } else {
-            System.out.println("No String Entered");
+            // e.getSource = resetButton
+            this.dispose();
+            new Login();
         }
     }
 }
