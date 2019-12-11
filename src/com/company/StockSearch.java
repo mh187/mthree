@@ -58,6 +58,9 @@ public class StockSearch extends JFrame implements ActionListener {
         setTitle("Search Stock Name");
         setSize(800, 600);
         setVisible(true);
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
     }
 
     private static String getUrl(URL url) throws IOException {

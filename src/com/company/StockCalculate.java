@@ -15,8 +15,11 @@ public class StockCalculate extends JFrame implements ActionListener {
     private String stockSymbol;
     private int amount;
     private double price;
+    private JIntegerTextField priceText;
+    private JIntegerTextField amountText;
     private Date datePurchased;
     private JButton resetButton;
+    private DatePicker datePicker;
 
     public StockCalculate(String stockSymbol) {
 
@@ -36,9 +39,13 @@ public class StockCalculate extends JFrame implements ActionListener {
         JLabel priceLabel = new JLabel("Price Purchased at ($): ");
         priceLabel.putClientProperty("JComponent.sizeVariant", "large");
 
-        JIntegerTextField priceText = new JIntegerTextField();
+        priceText = new JIntegerTextField();
+        priceText.setValue(1);
+        priceText.setMinimumValue(1);
 
-        JIntegerTextField amountText = new JIntegerTextField();
+        amountText = new JIntegerTextField();
+        amountText.setValue(1);
+        amountText.setMinimumValue(1);
 
         JLabel datePurchasedLabel = new JLabel("Date Purchased on: ");
 
@@ -50,7 +57,8 @@ public class StockCalculate extends JFrame implements ActionListener {
 
         LocalDate today = LocalDate.now();
         DatePickerSettings datePickerSettings = new DatePickerSettings();
-        DatePicker datePicker = new DatePicker(datePickerSettings);
+        datePicker = new DatePicker(datePickerSettings);
+        datePicker.setDateToToday();
         datePickerSettings.setAllowKeyboardEditing(false);
         datePickerSettings.setDateRangeLimits(today.minusYears(25L), today);
 
@@ -93,7 +101,6 @@ public class StockCalculate extends JFrame implements ActionListener {
         panel.add(resetButton, gbc);
 
 
-
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         add(panel);
 
@@ -101,17 +108,20 @@ public class StockCalculate extends JFrame implements ActionListener {
         setSize(800, 600);
         setVisible(true);
 
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
     }
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == resetButton) {
+        if (e.getSource() == resetButton) {
             new StockSearch();
             this.dispose();
         } else {
             // Calculate
-            new CalculationResult(stockSymbol);
+            new CalculationResult(stockSymbol, amountText.getValue(), priceText.getValue());
             this.dispose();
         }
     }

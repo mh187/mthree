@@ -48,11 +48,6 @@ class Login extends JFrame implements ActionListener {
             StockSearch stockSearch = new StockSearch();
             stockSearch.setVisible(true);
             this.dispose();
-//            this.setVisible(false);
-//            StockCalculate stockCalculate = new StockCalculate("AAPL");
-//            stockCalculate.setVisible(true);
-//            message.setText(" Hello " + userName + "");
-        } else {
             message.setText(" Invalid user ");
         }
     }
