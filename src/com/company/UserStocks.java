@@ -7,6 +7,9 @@ import org.json.JSONObject;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 import static java.lang.Float.parseFloat;
@@ -24,14 +27,15 @@ public class UserStocks {
         this.amount = amount;
     }
 
-    public void printStock(){
+    public void printStock() {
         System.out.println("Current Stock");
         System.out.println("Date: " + date);
         System.out.println("Stock: " + stock);
         System.out.println("Amount: " + amount);
         System.out.println("Price: $" + price);
-        System.out.println("Total Value: $" + amount*price);
+        System.out.println("Total Value: $" + amount * price);
     }
+
     private static String readAll(Reader rd) throws IOException {
         StringBuilder sb = new StringBuilder();
         int cp;
@@ -40,28 +44,30 @@ public class UserStocks {
         }
         return sb.toString();
     }
+
     private static String getUrl(URL url) throws IOException {
         URLConnection con = url.openConnection();
         con.connect();
-        InputStream is =con.getInputStream();
+        InputStream is = con.getInputStream();
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         StringBuffer sb = new StringBuffer();
         String str;
         while ((str = br.readLine()) != null) {
             sb.append(str);
         }
-        return(sb.toString());
+        return (sb.toString());
     }
-    private void computeDiff(float prevPrice, float currPrice, float amount){
+
+    private void computeDiff(float prevPrice, float currPrice, float amount) {
         float priceDiff = currPrice - prevPrice;
-        float diff = Math.abs(priceDiff*amount);
-        if(priceDiff>0){
+        float diff = Math.abs(priceDiff * amount);
+        if (priceDiff > 0) {
             System.out.println("Profit: $" + diff);
-        }
-        else{
+        } else {
             System.out.println("Loss: $" + diff);
         }
     }
+
     public static void main(String[] args) throws IOException, JSONException {
         Scanner input = new Scanner(System.in);
         System.out.print("Enter Date: ");
@@ -79,7 +85,9 @@ public class UserStocks {
         String sb = getUrl(url);
         JSONObject obj = new JSONObject(sb);
         JSONArray firstItem = obj.getJSONArray("bestMatches");
+        //firstItem.length();
         String stockSymbol = firstItem.getJSONObject(0).getString("1. symbol");
+        System.out.println(stockSymbol);
         String urlStockDate = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" + stockSymbol + "&outputsize=full&apikey=OFYBOAYYDFXDHFBJ";
         URL url2 = new URL(urlStockDate);
         String sb2 = getUrl(url2);

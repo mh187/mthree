@@ -1,12 +1,14 @@
 package com.company;
 
 import com.github.lgooddatepicker.components.DatePicker;
+import com.github.lgooddatepicker.components.DatePickerSettings;
 import com.github.lgooddatepicker.zinternaltools.JIntegerTextField;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class StockCalculate extends JFrame implements ActionListener {
@@ -42,7 +44,11 @@ public class StockCalculate extends JFrame implements ActionListener {
         JButton calculateDifferenceButton = new JButton("Calculate Profit/Loss");
         calculateDifferenceButton.addActionListener(this);
 
-        DatePicker datePicker = new DatePicker();
+        LocalDate today = LocalDate.now();
+        DatePickerSettings datePickerSettings = new DatePickerSettings();
+        DatePicker datePicker = new DatePicker(datePickerSettings);
+        datePickerSettings.setAllowKeyboardEditing(false);
+        datePickerSettings.setDateRangeLimits(today.minusYears(25L), today);
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
@@ -91,6 +97,6 @@ public class StockCalculate extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("asoihdufbahsjldfkbahsdnf");
+        ;
     }
 }
