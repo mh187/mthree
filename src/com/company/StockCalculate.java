@@ -5,6 +5,8 @@ import com.github.lgooddatepicker.components.DatePickerSettings;
 import com.github.lgooddatepicker.zinternaltools.JIntegerTextField;
 
 import javax.swing.*;
+import javax.swing.JFileChooser;
+import java.io.File;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -99,6 +101,17 @@ public class StockCalculate extends JFrame implements ActionListener {
         gbc.gridx = 3;
         gbc.gridy = 10;
         panel.add(resetButton, gbc);
+
+
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+        }
+
+
 
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
