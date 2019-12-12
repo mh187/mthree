@@ -15,13 +15,12 @@ public class Option extends JFrame implements ActionListener {
         single = new JButton("Single Search");
         file = new JButton("File Search (CSV)");
 
+        single.addActionListener(this);
+        file.addActionListener(this);
+
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-
-        setTitle("Single or Multi");
-        setSize(800, 600);
-        setVisible(true);
 
         panel.add(single);
         panel.add(file);
@@ -32,12 +31,22 @@ public class Option extends JFrame implements ActionListener {
         gbc.gridx = 3;
         gbc.gridy = 8;
         panel.add(file, gbc);
+
+        setTitle("Single or Multi");
+        setSize(800, 600);
+        setVisible(true);
+
+        add(panel);
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == single){
             new StockSearch();
+            this.dispose();
         } else {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
@@ -45,7 +54,7 @@ public class Option extends JFrame implements ActionListener {
             if (result == JFileChooser.APPROVE_OPTION) {
                 File selectedFile = fileChooser.getSelectedFile();
                 System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-                new StockFile(selectedFile.getAbsolutePath());
+                new StockFile("CAR");
                 this.dispose();
             }
         }

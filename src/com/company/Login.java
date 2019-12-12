@@ -45,9 +45,11 @@ class Login extends JFrame implements ActionListener {
         String password = String.copyValueOf(password_text.getPassword());
         if (userName.trim().equals("admin") && password.trim().equals("admin")) {
             this.setVisible(false);
-            StockSearch stockSearch = new StockSearch();
-            stockSearch.setVisible(true);
+            new Option();
+//            StockSearch stockSearch = new StockSearch();
+//            stockSearch.setVisible(true);
             this.dispose();
+        } else {
             message.setText(" Invalid user ");
         }
     }

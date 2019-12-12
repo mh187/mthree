@@ -102,7 +102,6 @@ public class StockSearch extends JFrame implements ActionListener {
                 System.out.println("No String Entered");
             }
         } else {
-            // e.getSource = resetButton
             this.dispose();
             new Login();
         }

@@ -102,18 +102,6 @@ public class StockCalculate extends JFrame implements ActionListener {
         gbc.gridy = 10;
         panel.add(resetButton, gbc);
 
-
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-        int result = fileChooser.showOpenDialog(this);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-        }
-
-
-
-
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         add(panel);
 
