@@ -121,8 +121,12 @@ public class StockCalculate extends JFrame implements ActionListener {
             this.dispose();
         } else {
             // Calculate
-            new CalculationResult(stockSymbol, amountText.getValue(), priceText.getValue());
-            this.dispose();
+            try {
+                new CalculationResult(stockSymbol, amountText.getValue(), priceText.getValue());
+                this.dispose();
+            } catch (Exception f) {
+                f.printStackTrace();
+            }
         }
     }
 }
